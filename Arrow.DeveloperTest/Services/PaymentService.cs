@@ -1,5 +1,7 @@
 ﻿using Arrow.DeveloperTest.Data;
+using Arrow.DeveloperTest.PaymentValidators;
 using Arrow.DeveloperTest.Types;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace Arrow.DeveloperTest.Services
@@ -8,7 +10,7 @@ namespace Arrow.DeveloperTest.Services
     {
         private readonly IAccountDataStore _accountDataStore;
 
-        public PaymentService(IAccountDataStore accountDataStore)
+        public PaymentService(IAccountDataStore accountDataStore, IDictionary<PaymentScheme, IPaymentValidator> paymentValidators)
         {
             this._accountDataStore = accountDataStore;
         }

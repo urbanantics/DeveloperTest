@@ -4,6 +4,7 @@
     {
         FasterPayments,
         Bacs,
-        Chaps
+        Chaps,
+        Swift15022_unsupported
     }
 }

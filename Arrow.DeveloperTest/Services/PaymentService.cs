@@ -1,6 +1,7 @@
 ﻿using Arrow.DeveloperTest.Data;
 using Arrow.DeveloperTest.PaymentValidators;
 using Arrow.DeveloperTest.Types;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 
@@ -9,79 +10,36 @@ namespace Arrow.DeveloperTest.Services
     public class PaymentService : IPaymentService
     {
         private readonly IAccountDataStore _accountDataStore;
+        private readonly IDictionary<PaymentScheme, IPaymentValidator> _paymentValidators;
 
         public PaymentService(IAccountDataStore accountDataStore, IDictionary<PaymentScheme, IPaymentValidator> paymentValidators)
         {
-            this._accountDataStore = accountDataStore;
+            _accountDataStore = accountDataStore ?? throw new ArgumentNullException(nameof(accountDataStore));
+            _paymentValidators = paymentValidators ?? throw new ArgumentNullException(nameof(paymentValidators));
         }
+
+
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
-            Account account = this._accountDataStore.GetAccount(request.DebtorAccountNumber);
+            if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var result = new MakePaymentResult();
+            var account = _accountDataStore.GetAccount(request.DebtorAccountNumber);
+            var result = new MakePaymentResult { Success = false };
 
-            switch (request.PaymentScheme)
-            {
-                case PaymentScheme.Bacs:
-                    if (account == null)
-                    {
-                        result.Success = false;
-                    }
-                    else if (!account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs))
-                    {
-                        result.Success = false;
-                    }
-                    else
-                    {
-                        result.Success = true;
-                    }
-                    break;
-
-                case PaymentScheme.FasterPayments:
-                    if (account == null)
-                    {
-                        result.Success = false;
-                    }
-                    else if (!account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.FasterPayments))
-                    {
-                        result.Success = false;
-                    }
-                    else if (account.Balance < request.Amount)
-                    {
-                        result.Success = false;
-                    }
-                    else
-                    {
-                        result.Success = true;
-                    }
-                    break;
-
-                case PaymentScheme.Chaps:
-                    if (account == null)
-                    {
-                        result.Success = false;
-                    }
-                    else if (!account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Chaps))
-                    {
-                        result.Success = false;
-                    }
-                    else if (account.Status != AccountStatus.Live)
-                    {
-                        result.Success = false;
-                    }
-                    else
-                    {
-                        result.Success = true;
-                    }
-                    break;
-            }
-
-            if (result.Success)
+            if (_paymentValidators.TryGetValue(request.PaymentScheme, out var validator) && validator.Validate(account, request))
             {
                 account.Balance -= request.Amount;
+                try
+                {
+                    _accountDataStore.UpdateAccount(account);
+                }
+                catch (Exception)
+                {
+                    // todo: log exception
+                    return result;
+                }
 
-                var accountDataStoreUpdateData = new AccountDataStore();
-                accountDataStoreUpdateData.UpdateAccount(account);
+                result.Success = true;
             }
 
             return result;

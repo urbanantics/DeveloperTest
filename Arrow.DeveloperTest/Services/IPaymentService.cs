@@ -1,9 +1,4 @@
-﻿using Arrow.DeveloperTest.Types;
-
-namespace Arrow.DeveloperTest.Services
+﻿public interface IPaymentService
 {
-    public interface IPaymentService
-    {
-        MakePaymentResult MakePayment(MakePaymentRequest request);
-    }
+    MakePaymentResult MakePayment(MakePaymentRequest request);
 }

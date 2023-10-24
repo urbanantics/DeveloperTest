@@ -1,10 +1,6 @@
-﻿using Arrow.DeveloperTest.Types;
-
-namespace Arrow.DeveloperTest.Data
+﻿
+public interface IAccountDataStore
 {
-    public interface IAccountDataStore
-    {
-        Account GetAccount(string accountNumber);
-        void UpdateAccount(Account account);
-    }
+    Account GetAccount(string accountNumber);
+    void UpdateAccount(Account account);
 }

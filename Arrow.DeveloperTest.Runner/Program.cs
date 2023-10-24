@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Arrow.DeveloperTest.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
@@ -17,10 +18,14 @@ class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
+                services.AddTransient<IAccountDataStore, MockAccountDataStore>();
                 services.AddScoped<IPaymentService, PaymentService>();
+                services.AddScoped<IReporter, ConsoleReporter>();
+                services.AddSingleton<IPaymentServiceFactory, PaymentServiceFactory>();
                 services.AddTransient<BacsPaymentValidator>();
                 services.AddTransient<FasterPaymentsValidator>();
                 services.AddTransient<ChapsPaymentValidator>();
+                services.AddTransient<IPaymentSimulator, PaymentSimulator>();
                 services.AddHostedService<App>();
             });
 }
@@ -39,8 +44,8 @@ public class App : IHostedService
         using var scope = _serviceProvider.CreateScope();
         var services = scope.ServiceProvider;
 
-        Console.WriteLine("Hello World");
-
+        var paymentSimulator = services.GetRequiredService<IPaymentSimulator>();
+        await paymentSimulator.RunSimulation(Environment.ProcessorCount, 10000, cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

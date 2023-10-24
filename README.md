@@ -1,3 +1,11 @@
+![Arrow Developer Test](https://github.com/urbanantics/DeveloperTest/actions/workflows/dotnet.yml/badge.svg)
+
+<img
+  align="center"
+  src="https://github-readme-stats.vercel.app/api/?username=urbanantics&theme=dracula"
+/>
+
+
 # Arrow Developer Test Instructions
 
 In the 'PaymentService.cs' file you will find a method for making a payment. At a high level the steps for making a payment are:

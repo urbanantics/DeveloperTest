@@ -6,11 +6,16 @@ namespace Arrow.DeveloperTest.Services
 {
     public class PaymentService : IPaymentService
     {
+        private readonly IAccountDataStore _accountDataStore;
+
+        public PaymentService(IAccountDataStore accountDataStore)
+        {
+            this._accountDataStore = accountDataStore;
+        }
         public MakePaymentResult MakePayment(MakePaymentRequest request)
         {
-            var accountDataStoreGetData = new AccountDataStore();
-            Account account = accountDataStoreGetData.GetAccount(request.DebtorAccountNumber);
-            
+            Account account = this._accountDataStore.GetAccount(request.DebtorAccountNumber);
+
             var result = new MakePaymentResult();
 
             switch (request.PaymentScheme)
@@ -23,6 +28,10 @@ namespace Arrow.DeveloperTest.Services
                     else if (!account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs))
                     {
                         result.Success = false;
+                    }
+                    else
+                    {
+                        result.Success = true;
                     }
                     break;
 
@@ -39,6 +48,10 @@ namespace Arrow.DeveloperTest.Services
                     {
                         result.Success = false;
                     }
+                    else
+                    {
+                        result.Success = true;
+                    }
                     break;
 
                 case PaymentScheme.Chaps:
@@ -53,6 +66,10 @@ namespace Arrow.DeveloperTest.Services
                     else if (account.Status != AccountStatus.Live)
                     {
                         result.Success = false;
+                    }
+                    else
+                    {
+                        result.Success = true;
                     }
                     break;
             }

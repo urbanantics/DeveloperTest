@@ -13,6 +13,7 @@ public class ChapsPaymentValidator : IPaymentValidator
     {
         return
             account != null &&
+            request.Amount > 0 &&
             account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Chaps) &&
             account.Status == AccountStatus.Live;
     }

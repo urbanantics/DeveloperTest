@@ -11,6 +11,9 @@ public class BacsPaymentValidator : IPaymentValidator
     /// <returns>true, if payment request is valid for account</returns>
     public bool Validate(Account account, MakePaymentRequest request)
     {
-        return account != null && account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs);
+        return 
+            account != null && 
+            request.Amount > 0 &&
+            account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs);
     }
 }

@@ -77,6 +77,64 @@ public class BacsPaymentValidatorTests
     }
 
     [Fact]
+    public void Given_Negative_Amount_When_Bacs_Payment_Should_Return_Fail()
+    {
+        // Arrange
+        var request = new MakePaymentRequest
+        {
+            DebtorAccountNumber = "12345",
+            PaymentScheme = PaymentScheme.Bacs,
+            Amount = -100
+        };
+        var account = new Account
+        {
+            AccountNumber = "12345",
+            Balance = 200,
+            AllowedPaymentSchemes = AllowedPaymentSchemes.Bacs
+        };
+
+        _accountDataStoreMock = new Mock<IAccountDataStore>();
+        _paymentService = new PaymentService(_accountDataStoreMock.Object, this._paymentValidators);
+        _accountDataStoreMock.Setup(x => x.GetAccount(request.DebtorAccountNumber)).Returns(account);
+
+        // Act
+        var result = _paymentService.MakePayment(request);
+
+        // Assert
+        result.Success.Should().BeFalse();
+        account.Balance.Should().Be(200);
+    }
+
+    [Fact]
+    public void Given_Zero_Amount_When_Bacs_Payment_Should_Return_Fail()
+    {
+        // Arrange
+        var request = new MakePaymentRequest
+        {
+            DebtorAccountNumber = "12345",
+            PaymentScheme = PaymentScheme.Bacs,
+            Amount = 0
+        };
+        var account = new Account
+        {
+            AccountNumber = "12345",
+            Balance = 200,
+            AllowedPaymentSchemes = AllowedPaymentSchemes.Bacs
+        };
+
+        _accountDataStoreMock = new Mock<IAccountDataStore>();
+        _paymentService = new PaymentService(_accountDataStoreMock.Object, this._paymentValidators);
+        _accountDataStoreMock.Setup(x => x.GetAccount(request.DebtorAccountNumber)).Returns(account);
+
+        // Act
+        var result = _paymentService.MakePayment(request);
+
+        // Assert
+        result.Success.Should().BeFalse();
+        account.Balance.Should().Be(200);
+    }
+
+    [Fact]
     public void Given_Bacs_Unavailable_When_Bacs_Payment_Should_Return_Fail_For_Valid_Amount()
     {
         // Arrange

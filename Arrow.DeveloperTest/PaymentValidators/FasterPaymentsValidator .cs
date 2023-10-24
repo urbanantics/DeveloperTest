@@ -13,6 +13,7 @@ public class FasterPaymentsValidator : IPaymentValidator
     {
         return
             account != null &&
+            request.Amount > 0 &&
             account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.FasterPayments) &&
             account.Balance >= request.Amount;
     }

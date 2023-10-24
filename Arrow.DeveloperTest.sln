@@ -1,18 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrow.DeveloperTest.Runner", "Arrow.DeveloperTest.Runner\Arrow.DeveloperTest.Runner.csproj", "{14B8C42C-A7C1-45C8-826B-B358761CF99D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arrow.DeveloperTest.Runner", "Arrow.DeveloperTest.Runner\Arrow.DeveloperTest.Runner.csproj", "{14B8C42C-A7C1-45C8-826B-B358761CF99D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrow.DeveloperTest.Tests", "Arrow.DeveloperTest.Tests\Arrow.DeveloperTest.Tests.csproj", "{43F210D1-BBD0-4F32-829D-6B6EB82369FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arrow.DeveloperTest.Tests", "Arrow.DeveloperTest.Tests\Arrow.DeveloperTest.Tests.csproj", "{43F210D1-BBD0-4F32-829D-6B6EB82369FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrow.DeveloperTest", "Arrow.DeveloperTest\Arrow.DeveloperTest.csproj", "{40877D37-7A68-42B9-8184-62B0264D0CCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arrow.DeveloperTest", "Arrow.DeveloperTest\Arrow.DeveloperTest.csproj", "{40877D37-7A68-42B9-8184-62B0264D0CCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{032617C3-AB84-45F2-9095-2E73CDACD13A}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arrow.DeveloperTest.Runner.Tests", "Arrow.DeveloperTest.Runner.Tests\Arrow.DeveloperTest.Runner.Tests.csproj", "{D31A5170-191F-473E-810B-6461A65369E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{40877D37-7A68-42B9-8184-62B0264D0CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40877D37-7A68-42B9-8184-62B0264D0CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40877D37-7A68-42B9-8184-62B0264D0CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31A5170-191F-473E-810B-6461A65369E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31A5170-191F-473E-810B-6461A65369E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31A5170-191F-473E-810B-6461A65369E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31A5170-191F-473E-810B-6461A65369E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

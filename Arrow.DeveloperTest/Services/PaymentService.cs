@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Payment Service resposible for making payments against account
+/// </summary>
 public class PaymentService : IPaymentService
 {
     private readonly IAccountDataStore _accountDataStore;
@@ -13,7 +16,12 @@ public class PaymentService : IPaymentService
         _paymentValidators = paymentValidators ?? throw new ArgumentNullException(nameof(paymentValidators));
     }
 
-
+    /// <summary>
+    /// Make payment based on MakePaymentRequest
+    /// </summary>
+    /// <param name="request">Payment Request details</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public MakePaymentResult MakePayment(MakePaymentRequest request)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));

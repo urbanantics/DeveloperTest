@@ -4,8 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-
-
 class Program
 {
 
@@ -29,7 +27,6 @@ class Program
 
 public class App : IHostedService
 {
-    int __worker_Count = 10;
     private readonly IServiceProvider _serviceProvider;
 
     public App(IServiceProvider serviceProvider)
